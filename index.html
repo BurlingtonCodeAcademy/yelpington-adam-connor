@@ -1,18 +1,91 @@
-<script>
-let name = document.location.pathname.slice(1);
+<!DOCTYPE html>
+<html lang="en">
 
-if (!name) {
-  console.log("no place name specfied");
-} else {
-  console.log("fetching place named '" + name + "'");
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+</head>
 
-  fetch(name + '.json')
-    .then(function (response) {
-      return response.text();
-    })
-    .then(function (myText) {
-      console.log(myText);
-    });
-}
+<body>
+  <style>
+    #map {
+      height: 400px;
+    }
+  </style>
+  <div id="map"></div>
+  <header id="restaurantList">
+    <ul> Restaraunt List
+      <li>
+        <a href="http://localhost:8080/restaurant.html#ahli-babas-kabob">Ahli Babas Kabob Shop</a>
+      </li>
+      <li>
+        <a href="http://localhost:8080/restaurant.html#american-flatbread">American Flatbread</a>
+      </li>
+      <li>
+        <a href="http://localhost:8080/restaurant.html#august-first">August First</a>
+      </li>
+      <li>
+        <a href="http://localhost:8080/restaurant.html#city-market">City Market</a>
+      </li>
+      <li>
+        <a href="http://localhost:8080/restaurant.html#El Cortijo">El Cortijo</a>
+      </li>
+      <li>
+        <a href="http://localhost:8080/restaurant.html#farmhouse-grill">Farmhouse Grill</a>
+      </li>
+      <li>
+        <a href="http://localhost:8080/restaurant.html#hen-of-the-wood">Hen of The Wood</a>
+      </li>
+      <li>
+        <a href="http://localhost:8080/restaurant.html#honey-road">Honey Road</a>
+      </li>
+      <li>
+        <a href="http://localhost:8080/restaurant.html#kountry-kart-deli">Kountry Kart Deli</a>
+      </li>
+      <li>
+        <a href="http://localhost:8080/restaurant.html#mr-mikes">Mr. Mikes</a>
+      </li>
+      <li>
+        <a href="http://localhost:8080/restaurant.html#pascolo-ristorante">Pascolo Ristorante</a>
+      </li>
+    </ul>
+  </header>
 
-</script>
+  <script>
+    // 44.4759 73.2121
+    var map = L.map('map').setView([44.47629, -73.213], 15);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    L.marker([44.475, -73.21]).addTo(map)
+      .bindPopup(<p href="http://localhost:8080/restaurant.html#pascolo-ristorante">Pascolo Ristorante</p>)
+      .openPopup();
+
+
+    let name = document.location.pathname.slice(1);
+
+    if (!name) {
+      console.log("no place name specfied");
+    } else {
+      console.log("fetching place named '" + name + "'");
+
+      fetch(name + '.json')
+        .then(function (response) {
+          return response.text();
+        })
+        .then(function (myText) {
+          console.log(myText);
+        });
+    }
+
+  </script>
+
+</body>
+
+</html>
