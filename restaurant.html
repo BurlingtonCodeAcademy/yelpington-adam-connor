@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Restaurants Page</title>
+    <link rel= 'stylesheet' href="style.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+
+<body>
+    <div id = 'title'>Yelpington</div>
+    <div id="map"></div>
+    <div id="container"></div>
+    <button id="back">Go Back</button>
+    <script>
+        let fileId = document.location.hash.slice(1)
+        let container = document.getElementById("container")
+        getJson(fileId)
+
+        function goBack() {
+            document.location.href = "http://localhost:8080/"
+        }
+        function getGeoJson(location) {
+            fetch("https://nominatim.openstreetmap.org/search/?q=" + location + "&format=json")
+                .then(response => {
+                    return response.json()
+                        .then(contents => {
+                            latitude = parseFloat(contents["0"].lat)
+                            longitude = parseFloat(contents["0"].lon)
+                            //restarauntName = contents["0"].
+                            setMap(latitude, longitude)
+                        })
+                })
+        }
+        //44.4759° N, 73.2121° W
+        function setMap(lat, lon) {
+            let map = L.map('map').setView([lat, lon], 19);
+            L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            L.marker([lat, lon]).addTo(map)
+                .bindPopup('Here is the Restaurant')
+                .openPopup();
+
+        }
+
+        function getJson(fileToGet) {
+            fetch("/" + fileToGet + ".json")
+                .then(response => {
+                    return response.json()
+                })
+                .then(contents => {
+                    container.innerHTML = toHTML(contents)
+                    getGeoJson(contents.address)
+                })
+        }
+
+        function toHTML(json) {
+            return ('<div id = "restaraunt">' +
+                '<p id = "name">'+ 'Name: ' + json.name + "</p>" +
+                '<p id = "address">' + 'Address: ' + json.address + "</p>" +
+                '<p id = "phone">' + 'Phone: ' +json.phone + "</p>" +
+                '<p id = "website">' + 'Website: ' + json.website + "</p>" +
+                '<ul id= "notes" >' +
+                json.notes
+                    .map(note => {
+                        return '<li class = "note">' + marked(note) + "</li>"
+                    })
+                    .join("") +
+                "</ul>" +
+                "</div>")
+        }
+        document.getElementById("back").addEventListener("click", goBack)
+    </script>
+</body>
+
+</html>

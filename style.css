@@ -1,0 +1,48 @@
+body {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr 2fr;
+  grid-gap: 1rem;
+  grid-template-areas:
+    "title title"  
+    "side-bar map";
+    background-color: #45969b;
+  color:#f8f8f8;
+  font-family: chalkduster;
+}
+
+
+#map {
+  height: 60vh;
+  width: 100%;
+  grid-area: map;
+  display: flex;
+}
+
+#title{
+  display: flex;
+  grid-area: title;
+  font-size: 100px;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 5px white double;
+}
+
+#restaraunt{
+  grid-area: side-bar;
+  display: flex;
+  justify-content: center;
+  background-color: #f96d15;
+  flex-direction: column;
+}
+
+#back{
+  transition: background-color .5s;
+}
+#back:hover{
+  background-color: gold
+}
+
+li{
+  margin: 5px;
+}

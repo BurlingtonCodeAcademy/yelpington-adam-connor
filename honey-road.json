@@ -1,13 +1,13 @@
 {
     "id":"honey-road",
     "name":"Honey Road",
-    "address":"156 Church Street",
+    "address":"156 Church Street burlington vt 05401",
     "phone":"802-497-2145",
     "hours":"Sunday - Saturday: 4:00pm - 10:00pm",
     "notes": [
         "$13 dollar brocolli to die for.",
         "Recommended for the not so hungry who like to share food.",
-        "Hummus is Yummus!",
+        "Hummus is <strong>Yummus!</strong>",
         "Good cocktails, great desserts.",
         "Rad pink neon sign."
     ]
